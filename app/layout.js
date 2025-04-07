@@ -3,7 +3,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "./dashboard/_components/Header";
-
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,17 +22,47 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    
     <ClerkProvider>
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* <Toaster/> */}
-        <Header/>
-        {children}
-      </body>
-    </html>
+      <html lang="en">
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          {/* Chatbot Script */}
+          <Script
+            id="chatbase-script"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `(function(){
+                if(!window.chatbase || window.chatbase("getState") !== "initialized"){
+                  window.chatbase = (...arguments) => {
+                    if(!window.chatbase.q) { window.chatbase.q = []; }
+                    window.chatbase.q.push(arguments);
+                  };
+                  window.chatbase = new Proxy(window.chatbase, {
+                    get(target, prop) {
+                      if(prop === "q") { return target.q; }
+                      return (...args) => target(prop, ...args);
+                    }
+                  });
+                }
+                const onLoad = function() {
+                  const script = document.createElement("script");
+                  script.src = "https://www.chatbase.co/embed.min.js";
+                  script.id = "4V9XuSdyCNMoVV7Y2r89c";
+                  script.domain = "www.chatbase.co";
+                  document.body.appendChild(script);
+                };
+                if(document.readyState === "complete") { 
+                  onLoad();
+                } else { 
+                  window.addEventListener("load", onLoad);
+                }
+              })();`,
+            }}
+          />
+
+          <Header />
+          {children}
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

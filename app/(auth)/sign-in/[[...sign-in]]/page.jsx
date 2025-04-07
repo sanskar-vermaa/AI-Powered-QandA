@@ -32,7 +32,7 @@ export default function Page() {
             </h2>
 
             <p className="mt-4 leading-relaxed text-white/90">
-             Enhance Your Interview Skills Through AI Powered Mock Interviews
+            Our AI-powered Q&A platform turns your study sessions into an interactive experience. You just tell us what you’re learning—and we’ll take care of the rest.
             </p>
           </div>
         </section>

@@ -8,6 +8,8 @@ import { Lightbulb, WebcamIcon } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Webcam from "react-webcam";
+import { UserAnswer } from '@/utils/schema'
+import { Mic } from "lucide-react";
 
 function Interview({ params }) {
     const [interviewId, setInterviewId] = useState(null);
@@ -53,18 +55,18 @@ function Interview({ params }) {
                 <div className="flex flex-col my-5 gap-5">
                     {interviewData ? (
                         <>
-                            <div className="flex flex-col p-5 rounded-lg border gap-5">
+                            <div className="flex flex-col p-5 rounded-4xl border gap-5">
                                 <h2 className="text-lg">
-                                    <strong> Job Role/Job Position:</strong> {interviewData.jobPosition}
+                                    <strong> Subject Name:</strong> {interviewData.jobPosition}
                                 </h2>
                                 <h2 className="text-lg">
-                                    <strong> Job Description/Tech Stack :</strong> {interviewData.jobDesc}
+                                    <strong> Subject related Topics :</strong> {interviewData.jobDesc}
                                 </h2>
                                 <h2 className="text-lg">
-                                    <strong> Years of Experience :</strong> {interviewData.jobExperience}
+                                    <strong> Difficulty level of questions :</strong> {interviewData.jobExperience}
                                 </h2>
                             </div>
-                            <div className="p-5 border rounded-lg border-yellow-300 bg-yellow-100">
+                            <div className="p-5 border rounded-4xl border-yellow-300 bg-yellow-100">
                                 <h2 className="flex gap-2 items-center text-yellow-500">
                                     <Lightbulb /> <strong>Information</strong>
                                 </h2>
@@ -72,10 +74,11 @@ function Interview({ params }) {
                             </div>
                         </>
                     ) : (
-                        <p>Loading interview details...</p>
+                        <p>Loading Q&A details...</p>
                     )}
                 </div>
                 <div>
+                
                     {webCamEnabled ? (
                         <Webcam
                             onUserMedia={() => setWebCamEnabled(true)}
@@ -88,9 +91,10 @@ function Interview({ params }) {
                         />
                     ) : (
                         <>
-                            <WebcamIcon className="h-72 w-full my-7 p-20 bg-secondary rounded-lg border" />
-                            <Button variant="ghost" className="w-full" onClick={() => setWebCamEnabled(true)}>
-                                Enable Web Cam and Microphone
+                           <Mic className="h-72 w-full my-7 p-20 bg-secondary rounded-lg border" />
+                            
+                            <Button variant="ghost" className="w-full rounded-4xl" onClick={() => setWebCamEnabled(true)}>
+                                Enable Microphone
                             </Button>
                         </>
                     )}
@@ -99,9 +103,9 @@ function Interview({ params }) {
 
             {/* Render the Link only if interviewId is available */}
             {interviewId && (
-                <div className="flex justify-end items-end">
+                <div className="flex justify-end items-end mt-8">
                     <Link href={`/dashboard/interview/${interviewId}/start`}>
-                        <Button>Start Interview</Button>
+                        <Button className="rounded-4xl">Start Q&A</Button>
                     </Link>
                 </div>
             )}

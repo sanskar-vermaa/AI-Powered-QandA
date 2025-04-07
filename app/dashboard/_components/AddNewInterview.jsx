@@ -1,4 +1,4 @@
-"use client"
+"use client" 
 import React, { useState } from 'react'
 import {
     Dialog,
@@ -7,7 +7,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
+} from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -20,100 +20,100 @@ import { useUser } from '@clerk/nextjs'
 import moment from 'moment'
 import { useRouter } from 'next/navigation'
 
-  
 function AddNewInterview() {
-    const [openDialog,setOpenDialog]=useState(false)
-    const [jobPosition,setJobPosition]=useState();
-    const [jobDesc,setJobDesc]=useState();
-    const [jobExperience,setJobExperience]=useState();
-    const [loading,setLoading]=useState(false);
-    const [JsonResponse,setJsonResponse]=useState([]);
-    const router=useRouter();
-    const {user} = useUser();
+    const [openDialog, setOpenDialog] = useState(false)
+    const [jobPosition, setJobPosition] = useState();
+    const [jobDesc, setJobDesc] = useState();
+    const [jobExperience, setJobExperience] = useState();
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const { user } = useUser();
 
-    const onSubmit=async(e)=>{
-      setLoading(true) 
-      e.preventDefault()
-        console.log(jobPosition,jobDesc,jobExperience)
+    const onSubmit = async (e) => {
+        setLoading(true)
+        e.preventDefault()
 
-        const InputPrompt="Jpb Positiion: "+jobPosition+",Job Description: "+jobDesc+", Years of Experience: "+jobExperience+", Depends on Job Position, Job Description & Years of Experience give us "+process.env.NEXT_PUBLIC_INTERVIEW_QUESTION_COUNT+" interview questions along with answers in JSON format, Give us questions and answers field on JSON"
+        const InputPrompt = `Subject Name: ${jobPosition}, Subject related Topics: ${jobDesc}, Difficulty level of questions: ${jobExperience}, Depends on Subject Name, Subject related Topics & Difficulty level of questions give us ${process.env.NEXT_PUBLIC_INTERVIEW_QUESTION_COUNT} questions along with answers in JSON format, Give us questions and answers field on JSON`;
 
-        const result = await chatSession.sendMessage(InputPrompt);
-        const MockJsonResp=(result.response.text()).replace('```json','').replace('```','')
-        console.log(JSON.parse(MockJsonResp));
-        setJsonResponse(MockJsonResp);
-        if(MockJsonResp){
-        const resp= await db.insert(MockInterview)
-        .values({
-          mockId:uuidv4(),
-          jsonMockResp:MockJsonResp,
-          jobPosition:jobPosition,
-          jobDesc:jobDesc,
-          jobExperience:jobExperience,
-          createdBy:user?.primaryEmailAddress?.emailAddress,
-          createdAt:moment().format('DD-MM-yyyy')
-        }).returning({mockId:MockInterview.mockId});
-        console.log("Inserted ID:",resp)
-        if(resp){
-          setOpenDialog(false);
-          router.push('/dashboard/interview/'+resp[0]?.mockId)
+        try {
+            const result = await chatSession.sendMessage(InputPrompt);
+            const MockJsonResp = (result.response.text()).replace('```json', '').replace('```', '');
+            const parsed = JSON.parse(MockJsonResp);
+
+            const structuredJson = {
+                interviewQuestions: Array.isArray(parsed) ? parsed : parsed?.interviewQuestions || []
+            };
+
+            const resp = await db.insert(MockInterview).values({
+                mockId: uuidv4(),
+                jsonMockResp: JSON.stringify(structuredJson),
+                jobPosition,
+                jobDesc,
+                jobExperience,
+                createdBy: user?.primaryEmailAddress?.emailAddress,
+                createdAt: moment().format('DD-MM-yyyy')
+            }).returning({ mockId: MockInterview.mockId });
+
+            if (resp) {
+                setOpenDialog(false);
+                router.push('/dashboard/interview/' + resp[0]?.mockId);
+            }
+        } catch (error) {
+            console.error("Error during AI generation or DB insert:", error);
         }
-      }
-      else{
-        console.log("ERROR");
-      }
+
         setLoading(false);
     }
-  return (
-    <div>
-        <div className='p-10 border rounded-lg bg-secondary hover:scale-105 hover:shadow-md cursor-pointer transition-all'
-        onClick={()=>setOpenDialog(true)}
-        >
-            <h2 className='text-lg text-center'>+ Add New</h2>
-        </div>
-        <Dialog open={openDialog} onOpenChange={setOpenDialog}>
 
-        <DialogContent className="max-w-2xl">
-            <DialogHeader>
-            <DialogTitle className='text-2xl'>Tell us more about your job interviewing</DialogTitle>
-            <DialogDescription>
-            </DialogDescription>
-            <form onSubmit={onSubmit}>
-              <div>
-                <h2>Add Details about your job position/role, Job Describtion and years of experience</h2>
-                <div className='mt-7 my-3'>
-                    <label>Job Role/Job Position</label>
-                    <Input placeholder="Ex.Full Stack Developer" required
-                    onChange={(event)=>setJobPosition(event.target.value)}
-                    />
-                </div>
-                <div className='my-3'>
-                    <label>Job Describtion/ Tech Stack (In Short)</label>
-                    <Textarea placeholder="Ex.React,Angular,NodeJs,MySQL etc" required
-                    onChange={(event)=>setJobDesc(event.target.value)}/>
-                </div>
-                <div className='my-3'>
-                    <label>Years of Experience</label>
-                    <Input placeholder="Ex.5" type="number" max="100" required
-                    onChange={(event)=>setJobExperience(event.target.value)}/>
-                </div>
-              </div>
-                <div className='flex gap-5 justify-end'>
-                    <Button type="button" variant="ghost" onClick={()=>setOpenDialog(false)}>Cancel</Button>
-                    <Button type="submit" disabled={loading}>
-                    {loading?
-                    <>
-                      <LoaderCircle className='animate-spin'/>'Generating from AI'
-                      </>:'Start Interview'
-                    }
-                    </Button>
-                </div>
-                </form>
-            </DialogHeader>
-        </DialogContent>
-        </Dialog>
-    </div>
-  )
+    return (
+        <div>
+            <div className='p-10 border rounded-4xl bg-secondary hover:scale-105 hover:shadow-md cursor-pointer transition-all'
+                onClick={() => setOpenDialog(true)}
+            >
+                <h2 className='text-3xl text-center font-bold'>Start Q&A</h2>
+            </div>
+
+            <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+                <DialogContent className="max-w-2xl">
+                    <DialogHeader>
+                        <DialogTitle className='text-2xl'>Tell us what you're studying</DialogTitle>
+                        <DialogDescription />
+                        <form onSubmit={onSubmit}>
+                            <div>
+                                <h2>Pick a subject, choose some topics, set the difficulty—and we’ll create smart questions just for you!</h2>
+                                <div className='mt-7 my-3'>
+                                    <label>Subject Name</label>
+                                    <Input placeholder="Ex.History, Computer, DSA" required
+                                        onChange={(e) => setJobPosition(e.target.value)}
+                                    />
+                                </div>
+                                <div className='my-3'>
+                                    <label>Subject related Topics</label>
+                                    <Textarea placeholder="Ex.History of India, Basic I/O, Algorithms" required
+                                        onChange={(e) => setJobDesc(e.target.value)} />
+                                </div>
+                                <div className='my-3'>
+                                    <label>Difficulty level of questions (upto 5)</label>
+                                    <Input placeholder="Ex.1" type="number" max="5" required
+                                        onChange={(e) => setJobExperience(e.target.value)} />
+                                </div>
+                            </div>
+                            <div className='flex gap-5 justify-end'>
+                                <Button type="button" variant="ghost" onClick={() => setOpenDialog(false)}>Cancel</Button>
+                                <Button type="submit" disabled={loading}>
+                                    {loading ?
+                                        <>
+                                            <LoaderCircle className='animate-spin' /> Generating from AI
+                                        </>
+                                        : 'Start Q&A'}
+                                </Button>
+                            </div>
+                        </form>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+        </div>
+    )
 }
 
 export default AddNewInterview
