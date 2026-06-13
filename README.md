@@ -6,7 +6,7 @@ An AI-powered mock interview platform designed to help users prepare for technic
 
 * Secure user authentication with Clerk
 * AI-generated interview questions using Google Gemini AI
-* Technical and behavioral interview simulations
+* Technical and behavioral  interview simulations
 * Voice-based interaction support
 * Interview history and performance tracking
 * Responsive and modern user interface
