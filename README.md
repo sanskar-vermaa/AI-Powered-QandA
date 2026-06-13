@@ -1,6 +1,6 @@
 # AI-Powered Mock Interview Platform
 
-An AI-powered mock interview platform designed to help users prepare for technical and behavioral interviews through realistic interview simulations, AI-generated questions, and instant feedback.
+An AI-powered mock  interview platform designed to help users prepare for technical and behavioral interviews through realistic interview simulations, AI-generated questions, and instant feedback.
 
 ## Features
 
