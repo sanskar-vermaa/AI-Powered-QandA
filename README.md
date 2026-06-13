@@ -14,6 +14,21 @@ An AI-powered mock interview platform designed to help users prepare for technic
 * Scalable backend architecture with Next.js
 * Real-time feedback generation
 * Cloud deployment support with  Vercel
+* ## Tech Stack
+
+### Frontend
+
+* Next.js 15
+* React
+* TypeScript
+* Tailwind CSS
+* Shadcn UI
+
+### Backend
+
+* Next.js Server Actions
+* Drizzle ORM
+* PostgreSQL (Neon)
 
 
 
