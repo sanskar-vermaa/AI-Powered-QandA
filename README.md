@@ -85,6 +85,35 @@ NEXT_PUBLIC_GEMINI_API_KEY=
 * Multi-language support
 * AI-generated improvement recommendations
 
-## License
+## Live Demo
 
-This project is intended for educational and portfolio purposes.
+Experience the application live:
+
+**Demo URL:** https://ai-powered-qand-a-delta.vercel.app/
+
+## Screenshots
+
+Add screenshots of:
+
+* Home Page
+* Interview Creation Page
+* AI Interview Session
+* Feedback Dashboard
+* User Profile
+
+## Deployment
+
+The application is deployed on Vercel and is accessible through the live demo URL above.
+
+## Production Status
+
+✅ Production Deployed
+
+✅ Authentication Enabled
+
+✅ Database Connected
+
+✅ AI Integration Active
+
+✅ Responsive Design
+
