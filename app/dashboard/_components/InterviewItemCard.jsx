@@ -16,12 +16,13 @@ function InterviewItemCard({interview}) {
 
 
   return (
-    <div className='border shadow-sm rounded-lg p-3'>
-        <h2 className='font-bold text-primary'>{interview?.jobPosition}</h2>
-        <h2 className='text-sm text-gray-600'>Difficulty level of questions: {interview?.jobExperience}  </h2>
-        <h2 className='text-xs text-gray-400'>Created At: {interview.createdAt}</h2>
+    <div className='tilt-card'>
+      <div className='tilt-card-inner glass-panel rounded-2xl p-4'>
+        <h2 className='font-bold text-primary glow-text'>{interview?.jobPosition}</h2>
+        <h2 className='text-sm text-muted-foreground'>Difficulty level of questions: {interview?.jobExperience}  </h2>
+        <h2 className='text-xs text-muted-foreground'>Created At: {interview.createdAt}</h2>
         <div className='flex justify-between mt-2 gap-5'>
-            
+
             <Button size="sm" variant="outline" className="w-30 rounded-4xl"
             onClick={onFeedbackPress}
             >Feedback</Button>
@@ -29,6 +30,7 @@ function InterviewItemCard({interview}) {
             onClick={onStart}
             >Retry</Button>
         </div>
+      </div>
     </div>
   )
 }
