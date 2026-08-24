@@ -25,6 +25,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <div className="gradient-mesh-bg" aria-hidden="true" />
           {/* Chatbot Script */}
           <Script
             id="chatbase-script"
