@@ -110,18 +110,18 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
         )}
       </Button>
   
-      <div className='w-full max-w-2xl bg-muted border p-4 rounded-lg'>
-        <h3 className='text-sm text-gray-500 mb-2'>Your Answer:</h3>
+      <div className='w-full max-w-2xl glass-panel p-4 rounded-2xl'>
+        <h3 className='text-sm text-muted-foreground mb-2'>Your Answer:</h3>
         <p className='text-base whitespace-pre-line'>
           {userAnswer || "Your recorded answer will appear here..."}
         </p>
       </div>
-  
+
       {/* Note Section */}
-      <p className="text-sm text-left text-gray-700 mt-4  max-w-2xl bg-yellow-100 border border-yellow-300 rounded-md p-4 shadow-sm">
-  <span className="text-yellow-700 font-medium lock mb-2">⚠️ Quick Reminder:</span><br />
-  Your answer will be <span className="font-semibold text-yellow-800">visible for 15 seconds</span> after you stop recording so you can review it.
-  It will then disappear automatically.No worries — you’ll still receive the <span className="font-semibold text-green-700">correct answer</span> and a <span className="font-semibold text-green-700">personalized feedback</span> to help you improve in the end.
+      <p className="text-sm text-left mt-4 max-w-2xl glass-panel rounded-2xl p-4">
+  <span className="text-primary font-medium mb-2">⚠️ Quick Reminder:</span><br />
+  Your answer will be <span className="font-semibold text-primary">visible for 15 seconds</span> after you stop recording so you can review it.
+  It will then disappear automatically.No worries — you’ll still receive the <span className="font-semibold text-primary">correct answer</span> and a <span className="font-semibold text-primary">personalized feedback</span> to help you improve in the end.
 </p>
 
     </div>
