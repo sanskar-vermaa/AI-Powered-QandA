@@ -47,7 +47,7 @@ function StartInterview(props) {
     };
 
     return (
-        <div>
+        <div className="px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <QuestionsSection
                     mockInterviewQuestion={mockInterviewQuestion}
@@ -61,14 +61,14 @@ function StartInterview(props) {
                 />
             </div>
 
-            <div className='flex justify-end gap-6'>
+            <div className='flex justify-end gap-6 pb-10'>
                 {activeQuestionIndex > 0 &&
-                    <Button onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}>Previous Button</Button>}
+                    <Button className="rounded-4xl" variant="outline" onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}>Previous Button</Button>}
                 {activeQuestionIndex !== mockInterviewQuestion?.length - 1 &&
-                    <Button onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}>Next Question</Button>}
+                    <Button className="rounded-4xl" onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}>Next Question</Button>}
                 {activeQuestionIndex === mockInterviewQuestion?.length - 1 &&
                     <Link href={`/dashboard/interview/${interviewData?.mockId}/feedback`}>
-                        <Button>End Q&A</Button>
+                        <Button className="rounded-4xl">End Q&A</Button>
                     </Link>
                 }
             </div>
