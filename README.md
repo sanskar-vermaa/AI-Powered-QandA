@@ -9,18 +9,20 @@ An AI-powered mock  interview platform designed to help users prepare for techni
 * Technical and behavioral  interview simulations
 * Voice-based interaction support
 * Interview history and performance tracking
-* Responsive and modern user interface
+* Responsive, glassmorphic UI with animated gradient backgrounds and 3D-tilt cards
 * PostgreSQL database integration using Neon
 * Scalable backend architecture with Next.js
 * Real-time feedback generation
 * Cloud deployment support with  Vercel
-* ## Tech Stack
+* Unit-tested AI response parsing (Vitest)
+
+## Tech Stack
 
 ### Frontend
 
 * Next.js 15
 * React
-* TypeScript
+* JavaScript (JSX)
 * Tailwind CSS
 * Shadcn UI
 
@@ -76,6 +78,15 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 DATABASE_URL=
 NEXT_PUBLIC_GEMINI_API_KEY=
+```
+
+## Testing
+
+Unit tests cover the AI response parsing utilities in `lib/parseAiResponse.js` using [Vitest](https://vitest.dev/).
+
+```bash
+npm run test        # run once
+npm run test:watch  # watch mode
 ```
 
 ## Future Enhancements
