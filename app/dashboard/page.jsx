@@ -7,8 +7,8 @@ function Dashboard() {
   return (
     <div className='p-10'>
 
-      <h2 className='font-bold text-2xl'>Dashboard</h2>
-      <h2 className='text-gray-500'>Just pick your subject and hit Start—the AI will handle the rest!
+      <h2 className='font-bold text-3xl text-primary glow-text'>Dashboard</h2>
+      <h2 className='text-muted-foreground'>Just pick your subject and hit Start—the AI will handle the rest!
       Let’s make studying smarter (and way less boring).</h2>
 
       <div className='grid grid-cols-1 md:grid-cols-3 my-5'>
