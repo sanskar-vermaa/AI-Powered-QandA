@@ -18,11 +18,13 @@ export default function HomePage() {
 
   return (
     <div className="">
-      <div className="mt-15 text-center">
-        <div className="flex justify-center items-center">
-          <h2 className="p-4 border border-gray-300 rounded-4xl text-5xl text-white bg-black w-fit">
-            Welcome To
-          </h2>
+      <div className="mt-15 text-center px-4">
+        <div className="tilt-card inline-block">
+          <div className="tilt-card-inner glass-panel rounded-4xl px-8 py-4">
+            <h2 className="text-5xl text-primary glow-text font-bold">
+              Welcome To
+            </h2>
+          </div>
         </div>
 
         <div className="mt-8 flex justify-center items-center">
@@ -30,8 +32,8 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="text-center">
-        <h2 className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
+      <div className="text-center px-4">
+        <h2 className="mt-8 text-lg font-medium text-pretty text-muted-foreground sm:text-xl/8 max-w-3xl mx-auto">
           Hey there, learner! <br />
           Want to test yourself in a fun, smart way? <br />
           Our AI-powered Q&A platform turns your study sessions into an interactive experience. <br />
@@ -40,83 +42,73 @@ export default function HomePage() {
       </div>
 
       <div className="mt-10 text-center">
-        <h2 className="text-xl text-gray-400">Click Below To</h2>
-        <Button className="mt-7 text-2xl rounded-4xl" onClick={() => router.replace('/dashboard')}>
+        <h2 className="text-xl text-muted-foreground">Click Below To</h2>
+        <Button className="mt-7 text-2xl rounded-4xl shadow-[0_0_40px_-8px_var(--primary)]" onClick={() => router.replace('/dashboard')}>
           Start Your Journey
         </Button>
       </div>
 
-      <section className="bg-white py-24 sm:py-32">
-  <div className="mx-auto max-w-7xl px-6 lg:px-8 border-2 pb-8 ">
+      <section className="py-24 sm:py-32">
+  <div className="mx-auto max-w-7xl px-6 lg:px-8 pb-8 ">
     <div className="mx-auto mt- max-w-2xl lg:text-center">
       <div className='flex justify-center items-center'>
-  <h2 className="text-3xl  font-semibold w-fit p-4 text-white bg-black mt-8 mb-10">About Delta Δ</h2>
-
+        <div className="tilt-card inline-block">
+          <h2 className="tilt-card-inner text-3xl font-semibold w-fit px-6 py-3 glass-panel rounded-2xl mt-8 mb-10 text-primary glow-text">About Delta Δ</h2>
+        </div>
       </div>
-     
-      <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl ">
+
+      <p className="mt-2 text-4xl font-bold tracking-tight text-foreground sm:text-5xl ">
         Smarter Learning with AI-Powered Questions
       </p>
-      <p className="mt-6 text-lg leading-8 text-gray-600">
+      <p className="mt-6 text-lg leading-8 text-muted-foreground">
         Delta Δ is your intelligent companion to test and strengthen your knowledge with dynamic, customized question sets.
       </p>
     </div>
 
     <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-      <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-        <div className="relative pl-16">
-          <dt className="text-base font-semibold leading-7 text-gray-900">
-            <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-[#98fb98]">
-              <AdjustmentsHorizontalIcon className="h-6 w-6 text-black" aria-hidden="true" />
+      <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-8 lg:max-w-none lg:grid-cols-2">
+        {[
+          {
+            icon: AdjustmentsHorizontalIcon,
+            title: "Personalized Practice",
+            desc: "Choose your subject, topic, and difficulty to generate a set of 5 AI-curated questions tailored to your learning goals.",
+          },
+          {
+            icon: LightBulbIcon,
+            title: "Smart Feedback",
+            desc: "Instantly compare your answers with the correct ones. Improve with structured insights and corrections.",
+          },
+          {
+            icon: ChatBubbleOvalLeftEllipsisIcon,
+            title: "DeltaBot 🤖",
+            desc: "Need help understanding? Our AI assistant is always available to guide you through tough concepts.",
+          },
+          {
+            icon: CheckCircleIcon,
+            title: "Review. Reflect. Repeat.",
+            desc: "After each session, reflect on what you did right and where to improve — reinforcing your learning loop.",
+          },
+        ].map(({ icon: Icon, title, desc }) => (
+          <div key={title} className="tilt-card">
+            <div className="tilt-card-inner glass-panel rounded-2xl p-6 pl-20 relative h-full">
+              <div className="absolute left-6 top-6 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+                <Icon className="h-6 w-6 text-primary-foreground" aria-hidden="true" />
+              </div>
+              <dt className="text-base font-semibold leading-7 text-foreground">
+                {title}
+              </dt>
+              <dd className="mt-2 text-base leading-7 text-muted-foreground">
+                {desc}
+              </dd>
             </div>
-            Personalized Practice
-          </dt>
-          <dd className="mt-2 text-base leading-7 text-gray-600">
-            Choose your subject, topic, and difficulty to generate a set of 5 AI-curated questions tailored to your learning goals.
-          </dd>
-        </div>
-
-        <div className="relative pl-16">
-          <dt className="text-base font-semibold leading-7 text-gray-900">
-            <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-[#98fb98]">
-              <LightBulbIcon className="h-6 w-6 text-black " aria-hidden="true" />
-            </div>
-            Smart Feedback
-          </dt>
-          <dd className="mt-2 text-base leading-7 text-gray-600">
-            Instantly compare your answers with the correct ones. Improve with structured insights and corrections.
-          </dd>
-        </div>
-
-        <div className="relative pl-16">
-          <dt className="text-base font-semibold leading-7 text-gray-900">
-            <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-[#98fb98]">
-              <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6 text-black" aria-hidden="true" />
-            </div>
-            DeltaBot 🤖
-          </dt>
-          <dd className="mt-2 text-base leading-7 text-gray-600">
-            Need help understanding? Our AI assistant is always available to guide you through tough concepts.
-          </dd>
-        </div>
-
-        <div className="relative pl-16">
-          <dt className="text-base font-semibold leading-7 text-gray-900">
-            <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-[#98fb98]">
-              <CheckCircleIcon className="h-6 w-6 text-black" aria-hidden="true" />
-            </div>
-            Review. Reflect. Repeat.
-          </dt>
-          <dd className="mt-2 text-base leading-7 text-gray-600">
-            After each session, reflect on what you did right and where to improve — reinforcing your learning loop.
-          </dd>
-        </div>
+          </div>
+        ))}
       </dl>
     </div>
   </div>
 </section>
 
-<footer className="bg-gray-800 text-gray-300 px-6 py-10">
+<footer className="glass-panel text-muted-foreground px-6 py-10 mx-4 mb-4 rounded-3xl">
   <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
     {/* Brand & Socials */}
     <div>
@@ -196,8 +188,8 @@ export default function HomePage() {
     </div>
   </div>
 
-  <div className="mt-10 text-center text-sm text-gray-500">
-    © 2025 Delta, Inc. All rights reserved.
+  <div className="mt-10 text-center text-sm text-muted-foreground">
+    © {new Date().getFullYear()} Delta, Inc. All rights reserved.
   </div>
 </footer>
 
