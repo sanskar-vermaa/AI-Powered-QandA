@@ -49,32 +49,34 @@ function Interview({ params }) {
     };
 
     return (
-        <div className="my-10">
-            <h2 className="font-bold text-2xl">Let's Get Started</h2>
+        <div className="my-10 px-6">
+            <h2 className="font-bold text-3xl text-primary glow-text">Let's Get Started</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div className="flex flex-col my-5 gap-5">
                     {interviewData ? (
                         <>
-                            <div className="flex flex-col p-5 rounded-4xl border gap-5">
-                                <h2 className="text-lg">
-                                    <strong> Subject Name:</strong> {interviewData.jobPosition}
-                                </h2>
-                                <h2 className="text-lg">
-                                    <strong> Subject related Topics :</strong> {interviewData.jobDesc}
-                                </h2>
-                                <h2 className="text-lg">
-                                    <strong> Difficulty level of questions :</strong> {interviewData.jobExperience}
-                                </h2>
+                            <div className="tilt-card">
+                                <div className="tilt-card-inner glass-panel flex flex-col p-5 rounded-4xl gap-5">
+                                    <h2 className="text-lg">
+                                        <strong> Subject Name:</strong> {interviewData.jobPosition}
+                                    </h2>
+                                    <h2 className="text-lg">
+                                        <strong> Subject related Topics :</strong> {interviewData.jobDesc}
+                                    </h2>
+                                    <h2 className="text-lg">
+                                        <strong> Difficulty level of questions :</strong> {interviewData.jobExperience}
+                                    </h2>
+                                </div>
                             </div>
-                            <div className="p-5 border rounded-4xl border-yellow-300 bg-yellow-100">
-                                <h2 className="flex gap-2 items-center text-yellow-500">
+                            <div className="glass-panel p-5 rounded-4xl border-primary/40">
+                                <h2 className="flex gap-2 items-center text-primary">
                                     <Lightbulb /> <strong>Information</strong>
                                 </h2>
-                                <h2 className="mt-3">{process.env.NEXT_PUBLIC_INFORMATION}</h2>
+                                <h2 className="mt-3 text-muted-foreground">{process.env.NEXT_PUBLIC_INFORMATION}</h2>
                             </div>
                         </>
                     ) : (
-                        <p>Loading Q&A details...</p>
+                        <p className="text-muted-foreground">Loading Q&A details...</p>
                     )}
                 </div>
                 <div>
