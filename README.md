@@ -76,9 +76,12 @@ Create a `.env.local` file and configure:
 ```env
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
-DATABASE_URL=
+NEXT_PUBLIC_DRIZZLE_DB_URL=
 NEXT_PUBLIC_GEMINI_API_KEY=
+NEXT_PUBLIC_INTERVIEW_QUESTION_COUNT=
 ```
+
+Never commit real values for these — `drizzle.config.js` and `utils/db.js` both read `NEXT_PUBLIC_DRIZZLE_DB_URL` from the environment and will throw/fail if it's missing.
 
 ## Testing
 
