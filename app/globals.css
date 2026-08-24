@@ -107,3 +107,78 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ---------------------------------------------------------------- */
+/* 2030-style visual system: animated gradient mesh, glassmorphism, */
+/* and CSS-only 3D tilt cards. No extra runtime dependencies.       */
+/* ---------------------------------------------------------------- */
+
+@layer utilities {
+  .gradient-mesh-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: radial-gradient(circle at 20% 20%, #00a36c33, transparent 40%),
+      radial-gradient(circle at 80% 0%, #32cd3233, transparent 45%),
+      radial-gradient(circle at 50% 100%, #76ff0322, transparent 50%),
+      #050a08;
+  }
+
+  .gradient-mesh-bg::before,
+  .gradient-mesh-bg::after {
+    content: "";
+    position: absolute;
+    width: 45vmax;
+    height: 45vmax;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: 0.55;
+    animation: mesh-float 18s ease-in-out infinite;
+  }
+
+  .gradient-mesh-bg::before {
+    top: -10%;
+    left: -10%;
+    background: #32cd32;
+    animation-delay: 0s;
+  }
+
+  .gradient-mesh-bg::after {
+    bottom: -15%;
+    right: -10%;
+    background: #00e5ff;
+    animation-delay: -9s;
+  }
+
+  @keyframes mesh-float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(6vmax, 4vmax) scale(1.15); }
+  }
+
+  .glass-panel {
+    background: color-mix(in srgb, var(--card) 55%, transparent);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 24px color-mix(in srgb, var(--primary) 60%, transparent);
+  }
+
+  .tilt-card {
+    perspective: 1200px;
+  }
+
+  .tilt-card-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.4s ease;
+  }
+
+  .tilt-card:hover .tilt-card-inner {
+    transform: rotateX(6deg) rotateY(-8deg) translateY(-6px) scale(1.02);
+    box-shadow: 0 30px 60px -20px color-mix(in srgb, var(--primary) 45%, transparent);
+  }
+}
