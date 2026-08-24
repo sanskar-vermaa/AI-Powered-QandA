@@ -5,6 +5,7 @@ import useSpeechToText from "react-hook-speech-to-text";
 import { Mic } from "lucide-react";
 import { toast } from "sonner";
 import { chatSession } from "@/utils/GeminiAIModel";
+import { parseFeedbackResponse } from "@/lib/parseAiResponse";
 import { UserAnswer } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { db } from "@/utils/db";
@@ -59,16 +60,15 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
 
     try {
       const result = await chatSession.sendMessage(feedbackPrompt);
-      const mockJsonResp = (await result.response.text()).replace("```json", "").replace("```", "");
-      const JsonFeedbackResp = JSON.parse(mockJsonResp);
+      const { rating, feedback } = parseFeedbackResponse(await result.response.text());
 
       const resp = await db.insert(UserAnswer).values({
         mockIdRef: interviewData?.mockId,
         question: mockInterviewQuestion[activeQuestionIndex]?.question,
         correctAns: mockInterviewQuestion[activeQuestionIndex]?.answer,
         userAns: userAnswer,
-        feedback: JsonFeedbackResp?.feedback,
-        rating: JsonFeedbackResp?.rating,
+        feedback: feedback,
+        rating: rating,
         userEmail: user?.primaryEmailAddress?.emailAddress,
         createdAt: moment().format("DD-MM-yyyy"),
       });
