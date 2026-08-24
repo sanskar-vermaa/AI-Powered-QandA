@@ -63,10 +63,10 @@ function AddNewInterview() {
 
     return (
         <div>
-            <div className='p-10 border rounded-4xl bg-secondary hover:scale-105 hover:shadow-md cursor-pointer transition-all'
-                onClick={() => setOpenDialog(true)}
-            >
-                <h2 className='text-3xl text-center font-bold'>Start Q&A</h2>
+            <div className='tilt-card cursor-pointer' onClick={() => setOpenDialog(true)}>
+                <div className='tilt-card-inner glass-panel p-10 rounded-4xl'>
+                    <h2 className='text-3xl text-center font-bold text-primary glow-text'>Start Q&A</h2>
+                </div>
             </div>
 
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>
