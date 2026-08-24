@@ -13,21 +13,21 @@ function Header() {
     },[])
 
   return (
-    <div className='flex p-4 items-center justify-between bg-secondary shadow-sm' >
+    <div className='glass-panel sticky top-0 z-50 flex p-4 items-center justify-between rounded-b-2xl' >
         <Image src={'/logo-1.svg'} width={160} height={100} alt='logo'/>
         <ul className='hidden md:flex gap-6'>
-            <li className={`hover:text-black hover:font-bold transition-all cursor-pointer
-            ${path=='/dashboard'&&'text-black font-bold'}
+            <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer
+            ${path=='/dashboard'&&'text-primary font-bold glow-text'}
             `}
             ><Link href={'/dashboard'}>Dashboard</Link></li>
-            <li className={`hover:text-black hover:font-bold transition-all cursor-pointer
-            ${path=='/dashboard/questions'&&'text-black font-bold'}
+            <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer
+            ${path=='/dashboard/questions'&&'text-primary font-bold glow-text'}
             `}>Questions</li>
-            <li className={`hover:text-black hover:font-bold transition-all cursor-pointer
-            ${path=='/dashboard/upgrade'&&'text-black font-bold'}
+            <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer
+            ${path=='/dashboard/upgrade'&&'text-primary font-bold glow-text'}
             `}>Upgrade</li>
-            <li className={`hover:text-black hover:font-bold transition-all cursor-pointer
-            ${path=='/dashboard/how'&&'text-black font-bold'}
+            <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer
+            ${path=='/dashboard/how'&&'text-primary font-bold glow-text'}
             `}>How it works?</li>
         </ul>
         <UserButton/>
