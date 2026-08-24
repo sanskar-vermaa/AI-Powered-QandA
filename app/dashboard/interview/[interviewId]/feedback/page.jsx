@@ -31,41 +31,39 @@ function Feedback({params}) {
   }
   return (
     <div className='p-10'>
-     
+
       {feedbackList?.length==0?
-      <h2 className='font-bold text-xl text-gray-500'>No Q&A Feedback Record Found</h2>
+      <h2 className='font-bold text-xl text-muted-foreground'>No Q&A Feedback Record Found</h2>
         :
 
       <>
-       <h2 className='text-3xl font-bold text-green-500'>Congratulation!</h2>
+       <h2 className='text-3xl font-bold text-primary glow-text'>Congratulation!</h2>
        <h2 className='font-bold text-2xl'>Here is your Q&A feedback</h2>
-      {/* <h2 className='text-primary text-lg my-3'>Your overall interview rating:<strong>7/10</strong></h2>
-       */}
 
-      <h2 className='text-sm text-gray-500'>Find below Q&A question with correct answer, Your answer and feedback for improvement</h2>
+      <h2 className='text-sm text-muted-foreground'>Find below Q&A question with correct answer, Your answer and feedback for improvement</h2>
       {feedbackList&&feedbackList.map((item,index)=>(
 
-      <Collapsible key={index} className="mt-7"> 
-      <CollapsibleTrigger className='p-2 bg-secondary rounded-lg flex justify-between my-2 text-left gap-7 w-full'>
+      <Collapsible key={index} className="mt-7 tilt-card">
+      <div className="tilt-card-inner glass-panel rounded-2xl overflow-hidden">
+      <CollapsibleTrigger className='p-3 flex justify-between text-left gap-7 w-full'>
 
-      {/* {index + 1}:  */}
       {item.question} <ChevronsUpDown className='h-5 w-5'/>
 
       </CollapsibleTrigger>
       <CollapsibleContent>
-       <div className='flex flex-col gap-2'>
-        {/* <h2 className='text-red-500 p-2 border rounded-lg'><strong>Rating: </strong>{item.rating}</h2> */}
-        <h2 className='p-2 border rounded-lg bg-red-50 text-sm text-red-900'><strong>Your Answer: </strong>{item.userAns}</h2>
-        <h2 className='p-2 border rounded-lg bg-green-50 text-sm text-green-900'><strong>Correct Answer: </strong>{item.correctAns}</h2>
-        <h2 className='p-2 border rounded-lg bg-blue-50 text-sm text-violet-600'><strong>Feedback: </strong>{item.feedback}</h2>
+       <div className='flex flex-col gap-2 p-3 pt-0'>
+        <h2 className='p-2 rounded-lg bg-destructive/10 text-sm text-foreground'><strong>Your Answer: </strong>{item.userAns}</h2>
+        <h2 className='p-2 rounded-lg bg-primary/10 text-sm text-foreground'><strong>Correct Answer: </strong>{item.correctAns}</h2>
+        <h2 className='p-2 rounded-lg bg-accent/10 text-sm text-foreground'><strong>Feedback: </strong>{item.feedback}</h2>
        </div>
       </CollapsibleContent>
+      </div>
       </Collapsible>
 
       ))}
       </>}
-      
-      <Button onClick={()=>router.replace('/dashboard')}>Go Home</Button>
+
+      <Button className="mt-8 rounded-4xl" onClick={()=>router.replace('/dashboard')}>Go Home</Button>
     </div>
   )
 }
