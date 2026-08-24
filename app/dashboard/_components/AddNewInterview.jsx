@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { chatSession } from '@/utils/GeminiAIModel'
+import { parseMockInterviewResponse } from '@/lib/parseAiResponse'
 import { LoaderCircle } from 'lucide-react'
 import { db } from '@/utils/db'
 import { MockInterview } from '@/utils/schema'
@@ -37,12 +38,7 @@ function AddNewInterview() {
 
         try {
             const result = await chatSession.sendMessage(InputPrompt);
-            const MockJsonResp = (result.response.text()).replace('```json', '').replace('```', '');
-            const parsed = JSON.parse(MockJsonResp);
-
-            const structuredJson = {
-                interviewQuestions: Array.isArray(parsed) ? parsed : parsed?.interviewQuestions || []
-            };
+            const structuredJson = parseMockInterviewResponse(result.response.text());
 
             const resp = await db.insert(MockInterview).values({
                 mockId: uuidv4(),
