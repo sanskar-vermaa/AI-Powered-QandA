@@ -7,7 +7,7 @@ export default function Page() {
         <section className="relative flex h-32 items-end glass-panel lg:col-span-5 lg:h-full xl:col-span-6">
           <img
             alt=""
-            src="pic-2.png"
+            src="/pic-2.png"
             className="absolute inset-0 h-full w-full object-cover opacity-80"
           />
 
