@@ -1,33 +1,15 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 import * as schema from "../utils/schema";
 
-// A real Postgres (compiled to WASM) per test file, with the same tables as
-// production. Column names match utils/schema.js, including "ccreatedAt".
+const SCHEMA_SQL = readFileSync(path.resolve(__dirname, "../db/schema.sql"), "utf8");
+
+// A real Postgres (compiled to WASM) per test file, created from the same
+// db/schema.sql that production and docker-compose use.
 export async function createTestDb() {
   const client = new PGlite();
-  await client.exec(`
-    CREATE TABLE "mockInterview" (
-      "id" serial PRIMARY KEY,
-      "jsonMockResp" text NOT NULL,
-      "jobPosition" varchar NOT NULL,
-      "jobDesc" varchar NOT NULL,
-      "jobExperience" varchar NOT NULL,
-      "createdBy" varchar NOT NULL,
-      "createdAt" varchar,
-      "mockId" varchar NOT NULL
-    );
-    CREATE TABLE "userAnswer" (
-      "id" serial PRIMARY KEY,
-      "mockId" varchar NOT NULL,
-      "question" varchar NOT NULL,
-      "correctAns" varchar,
-      "userAns" text,
-      "feedback" text,
-      "rating" varchar,
-      "userEmail" varchar,
-      "ccreatedAt" varchar
-    );
-  `);
+  await client.exec(SCHEMA_SQL);
   return drizzle(client, { schema });
 }
