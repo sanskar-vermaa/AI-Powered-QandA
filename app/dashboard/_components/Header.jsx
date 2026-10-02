@@ -1,38 +1,50 @@
-"use client"
-import { UserButton } from '@clerk/nextjs'
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import React, { useEffect } from 'react'
+"use client";
 
-function Header() {
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
-    const path=usePathname();
-    useEffect(()=>{
-        console.log(path)
-    },[])
+const LINKS = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/upgrade", label: "Upgrade" },
+  { href: "/#how-it-works", label: "How it works" },
+];
+
+export default function Header() {
+  const path = usePathname();
 
   return (
-    <div className='glass-panel sticky top-0 z-50 flex p-4 items-center justify-between rounded-b-2xl' >
-        <Image src={'/logo-1.svg'} width={160} height={100} alt='logo'/>
-        <ul className='hidden md:flex gap-6'>
-            <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer
-            ${path=='/dashboard'&&'text-primary font-bold glow-text'}
-            `}
-            ><Link href={'/dashboard'}>Dashboard</Link></li>
-            <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer
-            ${path=='/dashboard/questions'&&'text-primary font-bold glow-text'}
-            `}>Questions</li>
-            <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer
-            ${path=='/dashboard/upgrade'&&'text-primary font-bold glow-text'}
-            `}>Upgrade</li>
-            <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer
-            ${path=='/dashboard/how'&&'text-primary font-bold glow-text'}
-            `}>How it works?</li>
+    <header className="glass-panel sticky top-0 z-50 flex p-4 items-center justify-between rounded-b-2xl">
+      <Link href="/" aria-label="Delta home">
+        <Image src="/logo-1.svg" width={160} height={100} alt="Delta" priority />
+      </Link>
+      <nav aria-label="Main">
+        <ul className="hidden md:flex gap-6">
+          {LINKS.map(({ href, label }) => {
+            const active = path === href;
+            return (
+              <li key={href}>
+                <Link
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={`hover:text-primary transition-all ${active ? "text-primary font-bold glow-text" : ""}`}
+                >
+                  {label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
-        <UserButton/>
-    </div>
-  )
+      </nav>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
+      <SignedOut>
+        <SignInButton>
+          <button type="button" className="text-primary font-medium">Sign in</button>
+        </SignInButton>
+      </SignedOut>
+    </header>
+  );
 }
-
-export default Header
