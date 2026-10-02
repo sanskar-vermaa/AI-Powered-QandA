@@ -1,0 +1,36 @@
+# Local stack: the app plus Postgres (tables created from db/schema.sql).
+#   cp .env.example .env   # fill in Clerk and Gemini keys
+#   docker compose up --build
+# Then open http://localhost:3000
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: qanda
+      POSTGRES_PASSWORD: qanda
+      POSTGRES_DB: qanda
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qanda"]
+      interval: 5s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+        NEXT_PUBLIC_CHATBASE_ID: ${NEXT_PUBLIC_CHATBASE_ID:-}
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://qanda:qanda@db:5432/qanda
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+
+volumes:
+  db-data:
