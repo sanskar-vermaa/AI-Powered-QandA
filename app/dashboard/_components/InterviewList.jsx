@@ -1,42 +1,18 @@
-"use client"
-import { db } from '@/utils/db';
-import { MockInterview } from '@/utils/schema';
-import { useUser } from '@clerk/nextjs';
-import { desc, eq } from 'drizzle-orm';
-import React, { useEffect, useState } from 'react'
-import InterviewItemCard from './InterviewItemCard';
+import InterviewItemCard from "./InterviewItemCard";
 
-function InterviewList() {
-
-    const {user}=useUser();
-    const [InterviewList,setInterviewList]=useState([]);
-
-    useEffect(()=>{
-        user&&GetInterviewList();
-    },[user])
-
-    const GetInterviewList=async()=>{
-        const result=await db.select()
-        .from(MockInterview)
-        .where(eq(MockInterview.createdBy,user?.primaryEmailAddress?.emailAddress))
-        .orderBy(desc(MockInterview.id))
-
-        console.log(result);
-        setInterviewList(result);
-    }
+export default function InterviewList({ interviews }) {
   return (
-    <div>
-        <h2 className='font-medium text-xl'>Previous Q&A</h2>
-
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3'>
-            {InterviewList&&InterviewList.map((interview,index)=>(
-                <InterviewItemCard 
-                interview={interview}
-                key={index}/>
-            ))}
+    <section>
+      <h2 className="font-medium text-xl">Previous Q&A</h2>
+      {interviews.length === 0 ? (
+        <p className="text-muted-foreground my-3">No sessions yet. Start your first one above.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3">
+          {interviews.map((interview) => (
+            <InterviewItemCard interview={interview} key={interview.mockId} />
+          ))}
         </div>
-    </div>
-  )
+      )}
+    </section>
+  );
 }
-
-export default InterviewList
