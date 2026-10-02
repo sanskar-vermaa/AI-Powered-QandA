@@ -1,134 +1,96 @@
-# AI-Powered Mock Interview Platform
+# Delta Δ: AI-Powered Q&A Practice
 
-An AI-powered mock  interview platform designed to help users prepare for technical and behavioral interviews through realistic interview simulations, AI-generated questions, and instant feedback.
+Practice any subject out loud. Pick a subject, topics and difficulty; the AI writes questions with model answers, you answer by voice, and each answer is graded from 1 to 10 with specific feedback. Sessions, scores and feedback are saved per user.
+
+**Stack:** Next.js 15 (App Router, Server Actions) · React 19 · Clerk · Drizzle ORM · PostgreSQL (Neon or any Postgres) · Google Gemini · Tailwind CSS 4 · Vitest · PGlite · Docker · GitHub Actions
+
+**Live demo:** https://ai-powered-qand-a-delta.vercel.app/
 
 ## Features
 
-* Secure user authentication with Clerk
-* AI-generated interview questions using Google Gemini AI
-* Technical and behavioral  interview simulations
-* Voice-based interaction support
-* Interview history and performance tracking
-* Responsive, glassmorphic UI with animated gradient backgrounds and 3D-tilt cards
-* PostgreSQL database integration using Neon
-* Scalable backend architecture with Next.js
-* Real-time feedback generation
-* Cloud deployment support with  Vercel
-* Unit-tested AI response parsing (Vitest)
+- **AI-generated sessions:** questions and model answers for any subject, topic list and difficulty (1–5)
+- **Voice answers:** browser speech recognition with a microphone check; questions can be read aloud
+- **Instant grading:** every answer gets a 1–10 rating and 3–5 sentences of feedback right after recording; re-recording replaces the previous attempt
+- **Feedback report:** overall rating, per-question scores, your answer next to the model answer
+- **Dashboard:** history of sessions with retry, feedback and delete
+- **Accounts:** Clerk sign-in; every query is scoped to the signed-in user
+- **Cost control:** daily limits per user on new sessions and graded answers
+- **Optional assistant:** Chatbase widget when `NEXT_PUBLIC_CHATBASE_ID` is set
 
-## Tech Stack
+## Security
 
-### Frontend
+All database and Gemini calls run on the server through Server Actions and server components. The connection string and API key use server-only variables and modules marked `server-only`, so importing them into a client component fails the build. CI builds with canary secret values and fails if either appears in the browser bundle. See [SECURITY.md](SECURITY.md).
 
-* Next.js 15
-* React
-* JavaScript (JSX)
-* Tailwind CSS
-* Shadcn UI
+## Quick start
 
-### Backend
-
-* Next.js Server Actions
-* Drizzle ORM
-* PostgreSQL (Neon)
-
-
-
-### Authentication
-
-* Clerk Authentication
-
-### AI Integration
-
-* Google Gemini AI
-
-### Deployment
-
-* Vercel
-
-## Project Architecture
-
-The application follows a modern full-stack architecture where the frontend and backend are integrated within the Next.js framework. Authentication is handled through Clerk, data persistence is managed using PostgreSQL and Drizzle ORM, and AI-powered interview generation is provided through Google Gemini.
-
-## Core Functionalities
-
-1. User Registration and Authentication
-2. Interview Creation and Management
-3. AI-Powered Question Generation
-4. Interview Session Tracking
-5. Feedback and Performance Analysis
-6. Dashboard for Interview History
-7. Voice Interaction Support
-
-## Installation
+Requirements: Node.js 18.18+, a [Clerk](https://clerk.com) application, a [Gemini API key](https://aistudio.google.com/apikey) and a Postgres database ([Neon](https://neon.tech) free tier works).
 
 ```bash
-git clone <repository-url>
-cd AI-Powered-QandA
 npm install
-npm run dev
+cp .env.example .env.local     # fill in Clerk, DATABASE_URL and GEMINI_API_KEY
+npm run db:push                # create the tables (or run db/schema.sql)
+npm run dev                    # http://localhost:3000
 ```
 
-## Environment Variables
+### Docker
 
-Create a `.env.local` file and configure:
-
-```env
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-NEXT_PUBLIC_DRIZZLE_DB_URL=
-NEXT_PUBLIC_GEMINI_API_KEY=
-NEXT_PUBLIC_INTERVIEW_QUESTION_COUNT=
+```bash
+cp .env.example .env           # Clerk and Gemini keys; the database is provided
+docker compose up --build      # app on http://localhost:3000 with Postgres
 ```
 
-Never commit real values for these — `drizzle.config.js` and `utils/db.js` both read `NEXT_PUBLIC_DRIZZLE_DB_URL` from the environment and will throw/fail if it's missing.
+## Configuration
+
+| Variable | Required | Description |
+| --- | --- | --- |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` | yes | Clerk application keys |
+| `NEXT_PUBLIC_CLERK_SIGN_IN_URL`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL` | yes | `/sign-in`, `/sign-up` |
+| `DATABASE_URL` | yes | Postgres URL. Neon URLs use the serverless HTTP driver, others a `pg` pool (`DB_DRIVER` overrides) |
+| `GEMINI_API_KEY` | yes | Google Gemini key (server only) |
+| `GEMINI_MODEL` | no | Default `gemini-2.5-flash` |
+| `INTERVIEW_QUESTION_COUNT` | no | Questions per session, 1–10 (default 5) |
+| `MAX_INTERVIEWS_PER_DAY` | no | Sessions per user per day (default 10) |
+| `MAX_ANSWERS_PER_DAY` | no | Graded answers per user per day (default 100) |
+| `NEXT_PUBLIC_INFORMATION`, `NEXT_PUBLIC_QUESTION_NOTE` | no | Custom help text |
+| `NEXT_PUBLIC_CHATBASE_ID` | no | Enables the Chatbase assistant |
 
 ## Testing
 
-Unit tests cover the AI response parsing utilities in `lib/parseAiResponse.js` using [Vitest](https://vitest.dev/).
-
 ```bash
-npm run test        # run once
-npm run test:watch  # watch mode
+npm test               # 100 tests
+npm run test:coverage  # 100% statements on lib/ and server actions
+npm run lint
 ```
 
-## Future Enhancements
-
-* Advanced analytics dashboard
-* Multiple interview difficulty levels
-* Resume analysis integration
-* Multi-language support
-* AI-generated improvement recommendations
-
-## Live Demo
-
-Experience the application live:
-
-**Demo URL:** https://ai-powered-qand-a-delta.vercel.app/
-
-## Screenshots
-
-Add screenshots of:
-
-* Home Page
-* Interview Creation Page
-* AI Interview Session
-* Feedback Dashboard
-* User Profile
+The data layer and services are tested against [PGlite](https://pglite.dev), a real Postgres compiled to WebAssembly, using the same `db/schema.sql` as production, so no database server is needed. Tests cover ownership checks (users can't read, grade or delete each other's sessions), daily limits, AI failure handling and parsing of model output.
 
 ## Deployment
 
-The application is deployed on Vercel and is accessible through the live demo URL above.
+- **Vercel:** import the repo, add the environment variables above, deploy. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+- **Docker:** `docker build --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_... -t qanda .` then run with the server-side variables.
 
-## Production Status
+## Project structure
 
-✅ Production Deployed
+```
+app/
+  actions.js                 server actions (create, grade, delete) using the Clerk session
+  dashboard/                 dashboard, session intro, quiz and feedback pages
+  (auth)/                    Clerk sign-in and sign-up
+lib/
+  service.js                 session and grading logic, daily limits
+  interviews.js              owner-scoped queries
+  prompts.js                 Gemini prompts with fenced user input
+  parseAiResponse.js         validation and normalisation of model output
+  validation.js              input limits
+utils/
+  db.js, ai.js               server-only database and Gemini clients
+  schema.js                  Drizzle schema
+db/schema.sql                table definitions (docker-compose, tests)
+tests/                       Vitest suites
+```
 
-✅ Authentication Enabled
+More detail: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-✅ Database Connected
+## License
 
-✅ AI Integration Active
-
-✅ Responsive Design
-
+[MIT](LICENSE)
