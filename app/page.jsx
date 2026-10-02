@@ -1,21 +1,16 @@
-"use client";
-
-import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import Image from 'next/image'
+import { Button } from '@/components/ui/button';
 import {
   LightBulbIcon,
   ChatBubbleOvalLeftEllipsisIcon,
   AdjustmentsHorizontalIcon,
   CheckCircleIcon,
 } from '@heroicons/react/24/outline'
-import { Facebook, Github, Youtube, Instagram, Twitter } from 'lucide-react'
 
 
 
 export default function HomePage() {
-  const router = useRouter();
-
   return (
     <div className="">
       <div className="mt-15 text-center px-4">
@@ -33,22 +28,22 @@ export default function HomePage() {
       </div>
 
       <div className="text-center px-4">
-        <h2 className="mt-8 text-lg font-medium text-pretty text-muted-foreground sm:text-xl/8 max-w-3xl mx-auto">
+        <p className="mt-8 text-lg font-medium text-pretty text-muted-foreground sm:text-xl/8 max-w-3xl mx-auto">
           Hey there, learner! <br />
           Want to test yourself in a fun, smart way? <br />
           Our AI-powered Q&A platform turns your study sessions into an interactive experience. <br />
           You just tell us what you’re learning—and we’ll take care of the rest.
-        </h2>
+        </p>
       </div>
 
       <div className="mt-10 text-center">
         <h2 className="text-xl text-muted-foreground">Click Below To</h2>
-        <Button className="mt-7 text-2xl rounded-4xl shadow-[0_0_40px_-8px_var(--primary)]" onClick={() => router.replace('/dashboard')}>
-          Start Your Journey
+        <Button asChild className="mt-7 text-2xl rounded-4xl shadow-[0_0_40px_-8px_var(--primary)]">
+          <Link href="/dashboard">Start Your Journey</Link>
         </Button>
       </div>
 
-      <section className="py-24 sm:py-32">
+      <section id="how-it-works" className="py-24 sm:py-32">
   <div className="mx-auto max-w-7xl px-6 lg:px-8 pb-8 ">
     <div className="mx-auto mt- max-w-2xl lg:text-center">
       <div className='flex justify-center items-center'>
@@ -71,7 +66,7 @@ export default function HomePage() {
           {
             icon: AdjustmentsHorizontalIcon,
             title: "Personalized Practice",
-            desc: "Choose your subject, topic, and difficulty to generate a set of 5 AI-curated questions tailored to your learning goals.",
+            desc: "Choose your subject, topic, and difficulty to generate a set of AI-curated questions tailored to your learning goals.",
           },
           {
             icon: LightBulbIcon,
@@ -109,88 +104,18 @@ export default function HomePage() {
 </section>
 
 <footer className="glass-panel text-muted-foreground px-6 py-10 mx-4 mb-4 rounded-3xl">
-  <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-    {/* Brand & Socials */}
+  <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 md:items-center md:justify-between">
     <div>
-      <h2 className='text-5xl  font-semibold w-fit p-4 text-white '>Delta Δ</h2>
-      <p className="text-sm mb-4">
-        Empowering curious minds with instant, intelligent answers — anytime, anywhere.
-      </p>
-      <div className="flex space-x-4">
-        <a href="#" aria-label="Facebook" className="hover:text-white">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              fillRule="evenodd"
-              d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991..."
-              clipRule="evenodd"
-            />
-          </svg>
-        </a>
-        <a href="#" aria-label="Instagram" className="hover:text-white">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              fillRule="evenodd"
-              d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064..."
-              clipRule="evenodd"
-            />
-          </svg>
-        </a>
-        <a href="#" aria-label="GitHub" className="hover:text-white">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              fillRule="evenodd"
-              d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425..."
-              clipRule="evenodd"
-            />
-          </svg>
-        </a>
-      </div>
+      <p className="text-3xl font-semibold text-foreground">Delta Δ</p>
+      <p className="text-sm mt-2">Practice out loud, get instant AI feedback, and improve with every session.</p>
     </div>
-
-    {/* Links - Solutions / Support */}
-    <div className="grid grid-cols-2 gap-6">
-      <div>
-        <h3 className="text-white font-semibold mb-2">Solutions</h3>
-        <ul className="space-y-2 text-sm">
-          <li><a href="#" className="hover:text-white">Marketing</a></li>
-          <li><a href="#" className="hover:text-white">Analytics</a></li>
-          <li><a href="#" className="hover:text-white">Automation</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 className="text-white font-semibold mb-2">Support</h3>
-        <ul className="space-y-2 text-sm">
-          <li><a href="#" className="hover:text-white">Docs</a></li>
-          <li><a href="#" className="hover:text-white">Guides</a></li>
-          <li><a href="#" className="hover:text-white">Submit Ticket</a></li>
-        </ul>
-      </div>
-    </div>
-
-    {/* Links - Company / Legal */}
-    <div className="grid grid-cols-2 gap-6">
-      <div>
-        <h3 className="text-white font-semibold mb-2">Company</h3>
-        <ul className="space-y-2 text-sm">
-          <li><a href="#" className="hover:text-white">About</a></li>
-          <li><a href="#" className="hover:text-white">Blog</a></li>
-          <li><a href="#" className="hover:text-white">Jobs</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 className="text-white font-semibold mb-2">Legal</h3>
-        <ul className="space-y-2 text-sm">
-          <li><a href="#" className="hover:text-white">Terms</a></li>
-          <li><a href="#" className="hover:text-white">Privacy</a></li>
-          <li><a href="#" className="hover:text-white">License</a></li>
-        </ul>
-      </div>
-    </div>
+    <nav aria-label="Footer" className="flex gap-6 text-sm">
+      <Link href="/dashboard" className="hover:text-foreground">Dashboard</Link>
+      <Link href="/upgrade" className="hover:text-foreground">Pricing</Link>
+      <Link href="/sign-in" className="hover:text-foreground">Sign in</Link>
+    </nav>
   </div>
-
-  <div className="mt-10 text-center text-sm text-muted-foreground">
-    © {new Date().getFullYear()} Delta, Inc. All rights reserved.
-  </div>
+  <div className="mt-8 text-center text-sm">© {new Date().getFullYear()} Delta. All rights reserved.</div>
 </footer>
 
 
