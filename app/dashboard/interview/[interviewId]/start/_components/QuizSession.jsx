@@ -1,10 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import QuestionsSection from "./QuestionsSection";
-import RecordAnswerSection from "./RecordAnswerSection";
+
+// The speech-recognition hook touches `window` when its module loads, which
+// crashes server rendering, so the recorder is only loaded in the browser.
+const RecordAnswerSection = dynamic(() => import("./RecordAnswerSection"), {
+  ssr: false,
+  loading: () => <p className="mt-10 text-muted-foreground">Loading recorder...</p>,
+});
 
 export default function QuizSession({ mockId, questions }) {
   const [active, setActive] = useState(0);
